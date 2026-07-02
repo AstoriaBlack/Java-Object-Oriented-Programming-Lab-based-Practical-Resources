@@ -1,4 +1,5 @@
-public class Book {
+public class Book implements Comparable<Book> {
+    //here this means u compare a Book with another Book
     private String title;
     private double price;
     private Date date;
@@ -34,6 +35,15 @@ public class Book {
     }
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+//    @Override
+//    public int compareTo(Book b) {
+//        return this.getDate().getYear() - b.getDate().getYear();
+//    }
+    @Override
+    public int compareTo(Book b) {
+        return this.title.compareTo(b.getTitle());
     }
 
     @Override
