@@ -82,6 +82,7 @@ public class Counter extends JFrame {
         // — so we compare it against our button references with ==.
     private class MyListener implements ActionListener {
         @Override
+        //ActionEvent is what the user does in the gui - e.g: pressing a button
         public void actionPerformed(ActionEvent evt) {
             // evt.getSource() tells us exactly which button fired this event,
             // since all three share this one listener.
