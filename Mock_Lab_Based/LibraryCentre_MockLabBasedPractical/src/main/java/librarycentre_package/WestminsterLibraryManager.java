@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 
@@ -36,7 +37,8 @@ public class WestminsterLibraryManager implements LibraryManager {
         System.out.println("To Display the list of item press 2");
         
         System.out.println("To Open GUI, press 3");
-        
+
+        System.out.println("To edit a Title of an item, press 4");
         
 
         
@@ -66,6 +68,11 @@ public class WestminsterLibraryManager implements LibraryManager {
             case 3:
                 this.runGUI();
                 break;
+
+            //Edit Title
+            case 4:
+                this.editTitleItem();
+                break;
            
         }
         
@@ -79,6 +86,7 @@ public class WestminsterLibraryManager implements LibraryManager {
         if(itemList.size() < item_limit){
             System.out.println("Press 1 if you want to add a Book");
             System.out.println("Press 2 if you want to add a DVD");
+            System.out.println("Press 3 if you want to add a Magazine");
             
             int choiceItem = s.nextInt();
             s.nextLine();
@@ -126,6 +134,26 @@ public class WestminsterLibraryManager implements LibraryManager {
                     
                     this.addItemToList(dvd);
                     break;
+
+                case 3:
+                    System.out.println("Enter the issue number");
+                    int issue = s.nextInt();
+                    s.nextLine();
+
+                    System.out.println("Enter the publication frequency");
+                    String freq = s.nextLine();
+
+                    System.out.println("Enter the editor's name");
+                    String editor = s.nextLine();
+
+                    Magazine magazine = new Magazine(title,isbn);
+                    magazine.setEditor(editor);
+                    magazine.setIssueNumber(issue);
+                    magazine.setPublicationFrequency(freq);
+                    magazine.setPublicationYear(year);
+
+                    this.addItemToList(magazine);
+                    break;
             }
             
         }
@@ -147,16 +175,20 @@ public class WestminsterLibraryManager implements LibraryManager {
 
     @Override
     public void displayItems() {
-        
-        
+
         if (!itemList.isEmpty()){
+            Collections.sort(itemList); // Uses compareTo() automatically
+
             for(Item item : itemList) {
-                // print the type of item and the the description
+                // print the type of item and the description
                 if(item instanceof Book)
                     System.out.print("BOOK - ");
                 else if (item instanceof DVD)
                     System.out.print("DVD - ");
                 //add here teh code if you added teh class Megazine
+                else if (item instanceof Magazine){
+                    System.out.print("MAGAZINE - ");
+                }
                 
                 System.out.println(item.toString());
             }
@@ -171,5 +203,39 @@ public class WestminsterLibraryManager implements LibraryManager {
         ItemTableGUI table = new ItemTableGUI(itemList);
         table.setVisible(true);
     }
-    
+
+    @Override
+    public void editTitleItem() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter the ISBN of the item to be edited");
+        String isbn = scan.nextLine();
+
+        Item found = null;
+        for (Item item :itemList) {
+            if(item.getISBN().equals(isbn)) {
+                found = item;
+                break;
+            }
+        }
+
+        if (found != null) {
+            System.out.println("Current Title: " + found.getTitle());
+            System.out.println("Current Publication Year: " + found.getPublicationYear());
+
+            if (found instanceof Book) {
+                System.out.println("Type: BOOK");
+            } else if (found instanceof DVD) {
+                System.out.println("Type: DVD");
+            } else if (found instanceof Magazine) {
+                System.out.println("Type: Magazine");
+            }
+
+            System.out.println("Enter the new title: ");
+            String newTitle = scan.nextLine();
+            found.setTitle(newTitle);
+            System.out.println("Title updated successfully!");
+        } else {
+            System.out.println("Item not found");
+        }
+    }
 }

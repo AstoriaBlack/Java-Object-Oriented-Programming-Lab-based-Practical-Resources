@@ -6,11 +6,10 @@ package librarycentre_package;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.*;
 
 /**
  *
@@ -46,10 +45,36 @@ public class ItemTableGUI extends JFrame {
 
         // add a button on the bottom
         JButton button = new JButton("Info");
-        
+
+        JLabel infoLabel = new JLabel("Click info to see item counts");// starts empty/default
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int bookCount = 0, dvdCount = 0, magazineCount = 0;
+
+                for (Item item : itemList) {
+                    if (item instanceof Book) bookCount++;
+                    else if (item instanceof DVD) dvdCount++;
+                    else if (item instanceof Magazine) magazineCount++;
+                }
+
+                JOptionPane.showMessageDialog(null,
+                        "Books: " + bookCount + "\nDVDs: " + dvdCount + "\nMagazines: " + magazineCount);
+//                infoLabel.setText("Books: " + bookCount + " | DVDs: " + dvdCount + " | Magazines: " + magazineCount);
+            }
+        });
+        // Put button and label together in a panel so both go in SOUTH
+//        JPanel bottomPanel = new JPanel();
+//        bottomPanel.add(button);
+//        bottomPanel.add(infoLabel);
+
+
         // add the panel to the frame
         add(scrollPane,BorderLayout.CENTER); 
         add(button, BorderLayout.SOUTH);
+//        add(bottomPanel, BorderLayout.SOUTH);
+
     }
   
         

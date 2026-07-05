@@ -17,5 +17,7 @@ public interface LibraryManager {
     void displayItems(); // Print all the Items in the system 
     
     void runGUI(); // Run main GUI
+
+    void editTitleItem();
     
 }
