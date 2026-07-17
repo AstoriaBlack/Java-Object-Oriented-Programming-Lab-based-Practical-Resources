@@ -1,3 +1,5 @@
+package LinkedLists;
+
 //SinglyLinkedlist<T> a generic linked list
 //T extends Comparable<T> so we can use compareTo() inside Node
 public class SinglyLinkedList<T extends Comparable<T>> {

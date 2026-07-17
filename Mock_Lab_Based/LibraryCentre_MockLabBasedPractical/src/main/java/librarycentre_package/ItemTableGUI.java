@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author b.villarini
  */
-public class ItemTableGUI extends JFrame {
+public class ItemTableGUI extends JFrame{
     
     JTable myTable;
     ItemTableModel tableModel;
